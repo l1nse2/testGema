@@ -1,9 +1,12 @@
 @extends('layouts.master')
 @section('title', 'Index Autos')     
 @section('content')      
+@isset($success)
+    {{$success}}
+@endisset
         <div class="container">
             <div class="row">
-                <button type="button" class="btn btn-success mt-4 mb-2 ">Agregar Auto</button>
+                <button type="button" class="btn btn-success mt-4 mb-2 " onclick='newCar()'>Agregar Auto</button>
             </div>
             <div class="row">
                 <table class="table table-dark mt-2">
@@ -25,7 +28,7 @@
                             @foreach($cars as $car)                    
                             <tr>
                                 <th scope="row">{{$car->id}}</th>
-                                <td>{{$car->imagen}}</td>
+                                <td><img width="200" height="100" src="{{ asset('images/cars/'.$car->imagen) }}" alt="job image" title="job image"></td>
                                 <td>{{$car->marca}}</td>
                                 <td>{{$car->modelo}}</td>
                                 <td>{{$car->anio}}</td>
@@ -45,13 +48,20 @@
             </div>
         </div>
     
-        <script>
-            function seeCar($id){
-                let new_url = window.location.origin + '/car/' + $id
-                window.location.href = new_url;
+    <script>
+        function seeCar($id){
+            let new_url = window.location.origin + '/car/' + $id
+            window.location.href = new_url;
 
-                console.log(new_url);    
-            }
+            console.log(new_url);    
+        }
+
+        function newCar(){
+            let new_url = window.location.origin + '/newCar/'
+            window.location.href = new_url;
+
+            console.log(new_url);    
+        }
         </script>
 
 @stop

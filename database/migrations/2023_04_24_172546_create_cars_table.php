@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('marca');
             $table->string('modelo');
             $table->string('version');
-            $table->year('anio');
+            $table->integer('anio');
             $table->integer('precio');
             $table->date('fecha_ingreso');
             $table->timestamps();            

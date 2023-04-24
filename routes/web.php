@@ -14,10 +14,10 @@ use App\Http\Controllers\CarController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [CarController::class, 'index']);
 
 //rutas de cars
 Route::get('/cars', [CarController::class, 'index']);
 Route::get('/car/{id}', [CarController::class, 'show']);
+Route::get('/newCar', [CarController::class, 'create']);
+Route::post('/saveCar', [CarController::class, 'store']);

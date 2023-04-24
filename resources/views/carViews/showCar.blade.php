@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('title', 'Index Autos')     
 @section('content')
-<div class="row">
+            <div class="row">
                 <table class="table table-dark mt-2">
                     <thead>
                         <tr>
@@ -19,7 +19,7 @@
                         @isset($car)                    
                             <tr>
                                 <th scope="row">{{$car->id}}</th>
-                                <td>{{$car->imagen}}</td>
+                                <td><img width="300" height="200" src="{{ asset('storage/images/cars/'.$car->imagen) }}" alt="job image" title="job image"></td>
                                 <td>{{$car->marca}}</td>
                                 <td>{{$car->modelo}}</td>
                                 <td>{{$car->anio}}</td>
@@ -31,4 +31,14 @@
                     </tbody>
                 </table>
             </div>
+            <div class="row">
+                <button type="button" class="btn btn-primary mt-4 mb-2 " onclick='back()'>Atras</button>
+            </div>
+
+            <script>
+            function back(){
+                let new_url = window.location.origin;
+                window.location.href = new_url;    
+            }
+        </script>
 @stop
