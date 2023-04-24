@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('version');
             $table->year('anio');
             $table->integer('precio');
-            $table->date('fecha de ingreso');
+            $table->date('fecha_ingreso');
             $table->timestamps();            
         });
     }
