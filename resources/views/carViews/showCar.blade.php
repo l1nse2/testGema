@@ -19,7 +19,7 @@
                         @isset($car)                    
                             <tr>
                                 <th scope="row">{{$car->id}}</th>
-                                <td><img width="300" height="200" src="{{ asset('storage/images/cars/'.$car->imagen) }}" alt="job image" title="job image"></td>
+                                <td><img width="300" height="200" src="{{ asset('images/cars/'.$car->imagen) }}" alt="job image" title="job image"></td>
                                 <td>{{$car->marca}}</td>
                                 <td>{{$car->modelo}}</td>
                                 <td>{{$car->anio}}</td>

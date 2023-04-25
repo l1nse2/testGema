@@ -68,11 +68,16 @@ class CarController extends Controller
                         return view('index' , compact('success' , 'cars'));
                     }else
                     {
-                        dd('error no guardo');
+                        
+                        $error = 'Error al guardar el auto , intentelo nuvamente o pongase en contacto con el adminsitrador';
+                        $cars = Car::all();
+                        return view('index' , compact('error' , 'cars'));
                     }
                 }else 
                 {
-                    dd('error');
+                    $error = 'Error al guardar la imagen , intentelo nuvamente o pongase en contacto con el adminsitrador';
+                    $cars = Car::all();
+                    return view('index' , compact('error' , 'cars'));
                 }
             }else
             {
@@ -88,24 +93,71 @@ class CarController extends Controller
     public function show(string $id)
     {
         $car = Car::find($id);
-        //$files = Storage::disk('public')->allFiles('/images/cars');
-        //dd($files);
         return view('carViews/showCar' , compact('car'));
     }
 
     public function edit(string $id)
     {
-        //
+        $car = Car::find($id);
+        return view('carViews/editCar' , compact('car'));
     }
 
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        $auto = new Car();
+        $auto = $auto->find($request->get('id'));        
+        if($request->file('file'))
+        {
+            $fileName = auth()->id() . '_' . time() . '.'. $request->file->extension(); 
+            $request->file->move(public_path('images/cars'), $fileName);
+            $auto->imagen=($fileName);
+        }
+       
+        $auto->marca= $request->get('marca');
+        $auto->modelo= $request->get('modelo');
+        $auto->version= $request->get('version');
+        $auto->anio= $request->get('anio');
+        $auto->precio= $request->get('precio');
+        $auto->fecha_ingreso= $request->get('fecha_ingreso');        
+        if($auto->save())
+        {
+            $success = 'Se a editado con exito';
+                        $cars = Car::all();
+            return view('index' , compact('success' , 'cars'));
+        }else
+        {
+            
+            $error = 'Error al actualizar el auto , intentelo nuevamente o pongase en contacto con el administrador';
+                        $cars = Car::all();
+            return view('index' , compact('success' , 'cars'));
+        }    
+        
+        
     }
 
    
     public function destroy(string $id)
+    {        
+    	$auto = Car::find($id);
+        if($auto->delete())
+        {
+            return true;
+        }else
+        {
+            return false;
+        } 	
+    }
+
+    public function deleteAjax(Request $request)
     {
-        //
+    	$id = $request->id; 
+    	if ($this->destroy($id))
+    	{
+            $cars = Car::all();
+    		return response()->json(array('msg'=> true,'cars'=> $cars ), 200);
+    	}
+    	else
+    	{return response()->json(array('msg'=> false), 500);}
+      	 
     }
 }

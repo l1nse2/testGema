@@ -37,8 +37,8 @@
                                 <td>{{$car->version}}</td>
                                 <td>
                                     <button type="button" class="btn btn-primary btn-sm" onclick='seeCar({{$car->id}})'>Ver</button>
-                                    <button type="button" class="btn btn-warning btn-sm">Editar</button>
-                                    <button type="button" class="btn btn-danger btn-sm">Borrar</button>
+                                    <button type="button" class="btn btn-warning btn-sm" onclick='editCar({{$car->id}})'>Editar</button>
+                                    <button type="button" class="btn btn-danger btn-sm" onclick='deleteAuto({{$car->id}})'>Borrar</button>
                                 </td>
                             </tr>
                             @endforeach
@@ -56,12 +56,41 @@
             console.log(new_url);    
         }
 
+        function editCar($id){
+            let new_url = window.location.origin + '/carEdit/' + $id
+            window.location.href = new_url;
+
+        }
+
         function newCar(){
             let new_url = window.location.origin + '/newCar/'
             window.location.href = new_url;
 
             console.log(new_url);    
         }
+
+        function deleteAuto($id) {
+              let text = "Estas seguro que deseas borrar el auto";
+              if (confirm(text) == true) {
+                $.ajax({
+                   type:'post',
+                   url:'/deleteAjax',
+                   data: {  "_token": "{{ csrf_token() }}",
+                            id: $id },
+                   success:function(data) {
+                      alert('el auto fue borrado con exito.');                 
+                      location.reload();
+                    
+                   },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert('a ocurrido un error intentelo nuevamente mas tarde o pongase en contacto con el administrador.')
+                    }
+                });
+              } else {
+                text = "You canceled!";
+              }
+              console.log(text);
+            }  
         </script>
 
 @stop

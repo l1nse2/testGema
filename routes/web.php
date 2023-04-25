@@ -21,3 +21,8 @@ Route::get('/cars', [CarController::class, 'index']);
 Route::get('/car/{id}', [CarController::class, 'show']);
 Route::get('/newCar', [CarController::class, 'create']);
 Route::post('/saveCar', [CarController::class, 'store']);
+Route::post('/deleteAjax', [CarController::class, 'deleteAjax']);
+Route::get('/carEdit/{id}', [CarController::class, 'edit']);
+Route::post('/carUpload', [CarController::class, 'update']);
+
+
