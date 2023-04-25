@@ -6,7 +6,11 @@
 @endisset
         <div class="container">
             <div class="row">
-                <button type="button" class="btn btn-success mt-4 mb-2 " onclick='newCar()'>Agregar Auto</button>
+                <div class="col-10">
+                </div>
+                <div class="col-2">
+                    <button type="button" class="btn btn-success mt-4 mb-2 " onclick='newCar()'>Agregar Auto</button>
+                </div>
             </div>
             <div class="row">
                 <table class="table table-dark mt-2">
@@ -78,7 +82,7 @@
                    data: {  "_token": "{{ csrf_token() }}",
                             id: $id },
                    success:function(data) {
-                      alert('el auto fue borrado con exito.');                 
+                      alert('el vehiculo fue borrado con exito.');                 
                       location.reload();
                     
                    },

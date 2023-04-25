@@ -104,32 +104,49 @@ class CarController extends Controller
 
     public function update(Request $request)
     {
-        $auto = new Car();
-        $auto = $auto->find($request->get('id'));        
-        if($request->file('file'))
-        {
-            $fileName = auth()->id() . '_' . time() . '.'. $request->file->extension(); 
-            $request->file->move(public_path('images/cars'), $fileName);
-            $auto->imagen=($fileName);
-        }
-       
-        $auto->marca= $request->get('marca');
-        $auto->modelo= $request->get('modelo');
-        $auto->version= $request->get('version');
-        $auto->anio= $request->get('anio');
-        $auto->precio= $request->get('precio');
-        $auto->fecha_ingreso= $request->get('fecha_ingreso');        
-        if($auto->save())
-        {
-            $success = 'Se a editado con exito';
-                        $cars = Car::all();
-            return view('index' , compact('success' , 'cars'));
-        }else
-        {
-            
-            $error = 'Error al actualizar el auto , intentelo nuevamente o pongase en contacto con el administrador';
-                        $cars = Car::all();
-            return view('index' , compact('success' , 'cars'));
+        $validator = Validator::make($request->all(), [
+            'marca'=>'required',
+            'modelo'=>'required',            
+            'version'=>'required',
+            'precio'=>'required|max:10|regex:/^-?[0-9]+(?:\.[0-9]{1,2})?$/',
+            'anio'=>'required|max:10|regex:/^-?[0-9]+(?:\.[0-9]{1,2})?$/',
+            'fecha_ingreso'=>'required|date'
+        ],[
+    		'required' => 'Cuidado!! el campo :attribute no se puede dejar vacio',
+    		'valor.max' => 'Cuidado!! el campo :attribute no puede superar los 10 caracteres',
+    		'valor.regex' => 'Cuidado!! el campo :attribute solo admite numeros' 
+		]);
+
+        if ($validator->fails()) {
+            return Redirect::back()->withErrors($validator);            
+        }else{
+            $auto = new Car();
+            $auto = $auto->find($request->get('id'));        
+            if($request->file('file'))
+            {
+                $fileName = auth()->id() . '_' . time() . '.'. $request->file->extension(); 
+                $request->file->move(public_path('images/cars'), $fileName);
+                $auto->imagen=($fileName);
+            }
+        
+            $auto->marca= $request->get('marca');
+            $auto->modelo= $request->get('modelo');
+            $auto->version= $request->get('version');
+            $auto->anio= $request->get('anio');
+            $auto->precio= $request->get('precio');
+            $auto->fecha_ingreso= $request->get('fecha_ingreso');        
+            if($auto->save())
+            {
+                $success = 'Se a editado con exito';
+                            $cars = Car::all();
+                return view('index' , compact('success' , 'cars'));
+            }else
+            {
+                
+                $error = 'Error al actualizar el auto , intentelo nuevamente o pongase en contacto con el administrador';
+                            $cars = Car::all();
+                return view('index' , compact('success' , 'cars'));
+            }
         }    
         
         

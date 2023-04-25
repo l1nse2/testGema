@@ -32,7 +32,11 @@
                 </table>
             </div>
             <div class="row">
-                <button type="button" class="btn btn-primary mt-4 mb-2 " onclick='back()'>Atras</button>
+                <div class="col-xs-11 col-sm-11 col-md-11">
+                </div>        
+                <div class="col-xs-2 col-sm-2 col-md-1">
+                    <button type="button" class="btn btn-primary mt-4 mb-2 " onclick='back()'>Atras</button>
+                </div>
             </div>
 
             <script>
