@@ -160,4 +160,11 @@ class CarController extends Controller
     	{return response()->json(array('msg'=> false), 500);}
       	 
     }
+
+    public function getAutos(Request $request)
+    {
+    	$car = new Car();
+        $autos = Car::all();
+        return $autos;
+    }
 }
